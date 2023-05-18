@@ -22,3 +22,14 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+-visit root page
+-click on add project
+-fill name of project
+-fill descritpion 
+-add members if any?
+-create project
+
+expectations:
+-project has been created
+-projects_path
+

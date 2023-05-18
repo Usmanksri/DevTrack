@@ -1,9 +1,12 @@
 class Project < ApplicationRecord 
 
-    has_many :tasks, foreign_key: 'project_id'
+    has_many :tasks, foreign_key: 'project_id', dependent: :destroy
 
     belongs_to :creator, class_name: 'User'
-    has_many :project_members
-    has_many :members, through: :project_members, source: :user
+    has_many :project_members,  dependent: :destroy
+    has_many :members, through: :project_members, source: :user,  dependent: :destroy
+
+    validates :name, presence: true
+    validates :description, presence: true
 
 end

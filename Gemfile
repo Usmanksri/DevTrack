@@ -44,6 +44,15 @@ gem "bootsnap", require: false
 
 gem 'rails-erd'
 
+gem 'devise'
+gem 'bootstrap', '~> 5.2.0'
+gem 'importmap-rails'
+gem 'rails-ujs'
+gem 'webpacker', '~> 5.0'
+gem 'jsbundling-rails'
+
+
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -53,7 +62,10 @@ gem 'rails-erd'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails', '~> 4.0'
+
 end
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -72,3 +84,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "cssbundling-rails", "~> 1.1"
