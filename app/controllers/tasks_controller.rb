@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
 
     before_action :set_task, only: [:show, :edit, :update, :destroy]
+    include ApplicationHelper
 
 
     def index
@@ -14,6 +15,7 @@ class TasksController < ApplicationController
     def create
         @task=Task.new(task_params)
         @task.creator_id=current_user.id
+        @task.project_id=current_project_id
         if @task.save
             flash[:notice] = "Task was updated successfully."
             redirect_to tasks_path

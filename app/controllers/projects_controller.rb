@@ -11,6 +11,11 @@ class ProjectsController < ApplicationController
 
     end
 
+    # def select_project
+    #     cookies[:current_project_id] = params[:project_id]
+    #     redirect_to : a
+    # end
+
     def show
     end
 

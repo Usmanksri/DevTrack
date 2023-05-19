@@ -47,10 +47,11 @@ gem 'rails-erd'
 gem 'devise'
 gem 'bootstrap', '~> 5.2.0'
 gem 'importmap-rails'
+gem 'turbo-rails'
 gem 'rails-ujs'
 gem 'webpacker', '~> 5.0'
 gem 'jsbundling-rails'
-
+gem 'byebug'
 
 
 # Use Sass to process CSS

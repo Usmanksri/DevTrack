@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root "pages#home"
   resources :projects
+  #  Add route to select a project
   resources :tasks
 
 
