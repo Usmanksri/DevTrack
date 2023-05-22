@@ -31,7 +31,20 @@
             </li>            
 
         
-     
+        <li class="navbar-item-right">
+          <% if user_signed_in? %>
+          <%= form_tag select_project_path, method: :post, class: "nav-link btn-link", id: "project-form" do %>
+            <%= select_tag :project_id, options_from_collection_for_select(Project.all, :id, :name, cookies[:selectedProjectId]), prompt: "Select one", class: "form-control", onchange: "submit()" %>
+          <% end %>
+
+           <% else %>
+           <%= select_tag :project_id, options_for_select(["Select one"], selected: nil), class: "form-control" %>
+           
+           <% end %>     
+        </li>   
+          
+          
+          
         
 
 
