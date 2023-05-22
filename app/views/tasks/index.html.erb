@@ -15,6 +15,16 @@
                 <p class="card-text">Assigned to: <%= task.member.name %></p>
                 <%= link_to "View", task_path(task), class: "btn btn-outline-success" %>
                 <% if user_signed_in? %>
+
+                <div id="comment-form" style="display: none;">
+                <%= form_with model: Comment.new, url: task_comments_path(task), method: :post do |form| %>
+                    <%= form.text_area :content, class: "form-control", placeholder: "Enter comment" %>
+                    <%= form.submit "Add Comment", class: "btn btn-outline-info" %>
+                  <% end %>
+                  </div>
+
+                  <button id="show-comment-form" class="btn btn-outline-info">Add Comment</button>
+
                 <%= link_to "Edit", edit_task_path(task), class: "btn btn-outline-info" %>
 
                 <%= button_to "Delete", task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
@@ -32,3 +42,13 @@
 </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#show-comment-form').click(function() {
+      $('#comment-form').toggle();
+      $(this).hide(); // Hide the button
+    });
+  });
+</script>
