@@ -3,7 +3,7 @@ class Task < ApplicationRecord
     belongs_to :member, class_name: 'User', foreign_key: 'member_id'
 
     
-    has_many :comments, foreign_key: 'commentable_id'
+    has_many :comments, foreign_key: 'commentable_id', dependent: :destroy
 
 
     validates :title, :description, :creator_id, :project_id, presence: true

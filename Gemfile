@@ -53,6 +53,8 @@ gem 'webpacker', '~> 5.0'
 gem 'jsbundling-rails'
 gem 'byebug'
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

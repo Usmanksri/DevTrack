@@ -8,7 +8,7 @@ module ApplicationHelper
           Project.first
         else
           puts("Id found is there", selected_project_id.to_i)
-          selected_project_id
+          selected_project_id.to_i
         end
       end
         

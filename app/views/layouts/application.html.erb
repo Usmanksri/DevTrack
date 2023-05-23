@@ -10,6 +10,10 @@
     
         <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
         <%= javascript_importmap_tags %>
+        <%= javascript_include_tag "application" %>
+        <%= javascript_include_tag 'custom' %>
+
+
         <style>
         .flash-notice-container {
           background-color: green;

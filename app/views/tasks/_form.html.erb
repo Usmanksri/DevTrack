@@ -25,13 +25,26 @@
             <%= f.text_area :description, rows: 10, class: "form-control shadow rounded", placeholder: "Description of task" %>
           </div>
         </div>
+        
+        <div class="form-group row">
+          <%= f.label :status, class: "col-2 col-form-label text-light" %>
+          <div class="col-10">
+            <%= f.select :status, options_for_select(["todo", "in-process", "done"]), { prompt: "Select one" }, { class: "form-control" } %>
+          </div>
+        </div>
+
+        <div class="form-group row">
+        <%= f.label :priority, class: "col-2 col-form-label text-light" %>
+        <div class="col-10">
+          <%= f.select :priority, options_for_select(["high", "medium", "low"]), { prompt: "Select one" }, { class: "form-control" } %>
+        </div>
+      </div>
+
 
         <div class="form-group row">
           <%= f.label :member, class: "col-2 col-form-label text-light" %> 
           <div class="col-10"> 
-          <%= f.collection_select :member_id, User.where(role: "member"), :id, :name, { prompt: "Select one" }, { class: "form-control" } %>
-
-
+          <%= f.collection_select :member_id, Project.find(current_project_id).members, :id, :name, { prompt: "Select one" }, { class: "form-control" } %>
           </div>
         </div>
         

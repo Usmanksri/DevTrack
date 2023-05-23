@@ -5,3 +5,5 @@ import "bootstrap"
 import "jquery";
 import { Turbo } from "@hotwired/turbo-rails";
 import * as bootstrap from "bootstrap"
+//= require jquery
+//= require jquery_ujs
