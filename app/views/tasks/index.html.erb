@@ -1,5 +1,5 @@
 <div id="page-content">
-<h1 class="text-center mt-4">Listing all project</h1>
+<h1 class="text-center mt-4">Listing all tasks</h1>
 <div class="container">
 
 <% @tasks.each do |task| %>
@@ -8,6 +8,8 @@
         <div class="card text-center shadow mb-5 bg-white rounded">
         <div class="card-header font-italic">
                 <h5 class="card-title"><%= link_to task.title, task_path(task), class: "text-success" %></h5>
+                <%= link_to Project.find(task.project_id).name, project_path(Project.find(task.project_id)), class: "badge rounded-pill text-bg-info mr-1"%>
+
         </div>
                 <div class="card-body">
                 <p class="card-text">Description: <%= truncate(task.description, length: 100) %></p>
@@ -15,27 +17,33 @@
                 <p class="card-text">Assigned to: <%= task.member.name %></p>
                 <%= link_to "View", task_path(task), class: "btn btn-outline-success" %>
                 <% if user_signed_in? %>
-
-                <div id="comment-form" style="display: none;">
-                <%= form_with model: Comment.new, url: task_comments_path(task), method: :post do |form| %>
-                    <%= form.text_area :content, class: "form-control", placeholder: "Enter comment" %>
-                    <%= form.submit "Add Comment", class: "btn btn-outline-info" %>
-                  <% end %>
-                  </div>
-
-                  <button id="show-comment-form" class="btn btn-outline-info">Add Comment</button>
-
                 <%= link_to "Edit", edit_task_path(task), class: "btn btn-outline-info" %>
-
                 <%= button_to "Delete", task_path(task), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
-
                 <% end %>
+        </div>
+
+                <div class="card-footer">
+                <div class="form-check form-check-inline">
+                <%= radio_button_tag "status_#{task.id}", "todo", task.status == 'todo', class: "form-check-input", data: { task_id: task.id } %>
+                <label class="form-check-label btn btn-outline-primary" for="status_<%= task.id %>">Todo</label>
                 </div>
-                <div class="card-footer text-muted">
+                <div class="form-check form-check-inline">
+                <%= radio_button_tag "status_#{task.id}", "in-process", task.status == 'in-process', class: "form-check-input", data: { task_id: task.id } %>
+                <label class="form-check-label btn btn-outline-warning" for="status_<%= task.id %>">In Process</label>
+                </div>
+                <div class="form-check form-check-inline">
+                <%= radio_button_tag "status_#{task.id}", "done", task.status == 'done', class: "form-check-input", data: { task_id: task.id } %>
+                <label class="form-check-label btn btn-outline-success" for="status_<%= task.id %>">Done</label>
+                </div>
+                </div>
+
+
+            <div class="card-footer text-muted">
                 <small>Created <%= time_ago_in_words(task.created_at) %> ago, 
                 edited <%= time_ago_in_words(task.updated_at) %> ago</small>
             </div>
-    </div>
+
+
     </div>
     </div>
 <% end %>
@@ -43,12 +51,31 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
-    $('#show-comment-form').click(function() {
-      $('#comment-form').toggle();
-      $(this).hide(); // Hide the button
+    $('input[type="radio"][name^="status_"]').change(function() {
+      var taskID = $(this).data('taskId'); // Updated to use 'taskId'
+      var status = $(this).val();
+      var taskURL = '<%= task_path('TASK_ID') %>'.replace('TASK_ID', taskID);
+      console.log("task url is: ", taskURL);
+
+      $.ajax({
+        url: taskURL,
+        type: 'PATCH',
+        data: { task: { status: status } },
+        dataType: 'json',
+        success: function(response) {
+          console.log(response);
+          // Handle success response here if needed
+          // Update the task status display if necessary
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+          // Handle error response here if needed
+        }
+      });
     });
   });
 </script>
+
+

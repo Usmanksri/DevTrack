@@ -11,3 +11,5 @@ pin_all_from('app/javascript', under: 'javascript')
 
 
 
+pin "trix"
+pin "@rails/actiontext", to: "actiontext.js"

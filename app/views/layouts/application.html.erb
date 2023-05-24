@@ -1,8 +1,6 @@
     <!DOCTYPE html>
     <html>
       <head>
-
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>DevTrack</title>
@@ -12,22 +10,61 @@
     
         <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
         <%= javascript_importmap_tags %>
+        <%= javascript_include_tag "application" %>
+        <%= javascript_include_tag 'custom' %>
         
+        <%= javascript_pack_tag 'application' %>
+        <%= stylesheet_pack_tag 'application' %>
 
+
+
+        <style>
+        .flash-notice-container {
+          background-color: green;
+          color: white;
+          padding: 10px;
+          margin-bottom: 10px;
+          display: none; 
+        }
+        .flash-alert-container {
+          background-color: yellow;
+          color: white;
+          padding: 10px;
+          margin-bottom: 10px;
+          display: none; 
+        }
+      </style>
 
       </head>
       <body>
       <%= render "layouts/navbar" %>
       <br/>
 
-      <% if notice%>
-      <%= notice%>
-      <% end %>
-
-      <% if alert%>
-      <%= alert%>
-      <% end %>
-
-        <%= yield %>
+      <% if notice %>
+      <div class="flash-notice-container">
+        <%= notice %>
+      </div>
+    <% end %>
+  
+    <% if alert %>
+      <div class="flash-alert-container">
+        <%= alert %>
+      </div>
+    <% end %>
+  
+    <%= yield %>
+  
+    <!-- Add your JavaScript/jQuery code here -->
+    <script>
+      $(document).ready(function() {
+        // Show the flash notice container with a fade-in effect
+        $('.flash-notice-container, .flash-alert-container').fadeIn('slow');
+  
+        // Hide the flash notice containers after a certain time (e.g., 5 seconds)
+        setTimeout(function() {
+          $('.flash-notice-container, .flash-alert-container').fadeOut('slow');
+        }, 5000);
+      });
+    </script>
       </body>
     </html>

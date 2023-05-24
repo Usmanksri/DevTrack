@@ -1,10 +1,13 @@
 class TasksController < ApplicationController
 
     before_action :set_task, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user!
+    before_action :authenticate_project, only: [:edit, :update, :destroy]
+
     include ApplicationHelper
     
     def index
-        @tasks=Task.all
+        @tasks=Task.where(project_id: current_project_id)
     end
 
     def new
@@ -16,10 +19,9 @@ class TasksController < ApplicationController
         @task.creator_id=current_user.id
         @task.project_id=current_project_id
         if @task.save
-            flash[:notice] = "Task was updated successfully."
+            flash[:notice] = "Task was created successfully."
             redirect_to tasks_path
         else
-            #flash[:notice]= "Not updated  #{@task.errors.full_messages}"
            render 'new'
         end
 
@@ -31,16 +33,20 @@ class TasksController < ApplicationController
 
     def update
         if @task.update(task_params)
-            flash[:notice] = "Task was updated successfully."
-            redirect_to tasks_path
+          flash[:notice] = "Task was updated successfully." unless request.xhr?
+          respond_to do |format|
+            format.html { redirect_to tasks_path }
+            format.json { render json: { success: true } }
+          end
         else
-            flash[:notice]= "Not updated  #{@task.errors.full_messages}"
-           redirect_to tasks_path
+          flash.now[:notice] = "Task update failed. #{@task.errors.full_messages}"
+          redirect_to tasks_path
         end
-    end
+      end
+      
     
     def show
-
+        @comments = Comment.where(commentable_id: params[:id]).order(created_at: :desc)
     end
 
     def destroy
@@ -53,7 +59,18 @@ class TasksController < ApplicationController
     end
 
     def task_params
-        params.require(:task).permit(:title, :description, :member_id, :project_id)
+        params.require(:task).permit(:title, :description, :member_id, :project_id, :status, :priority)
     end
+
+
+    def authenticate_project
+        task = Task.find(params[:id])
+        if not (current_project_id==task.project_id)
+            flash[:notice]= "you are not authorized to perform this action"
+          redirect_to tasks_path
+        end
+      end
+      
+
 
 end

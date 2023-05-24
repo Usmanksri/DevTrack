@@ -1,9 +1,14 @@
 class ProjectsController < ApplicationController
 
     before_action :set_project, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user!
 
     def index
-        @projects=Project.all
+        if (current_user.role=="manager")
+            @projects=current_user.created_projects
+        else
+            @projects=current_user.projects
+        end
     end
 
     def new
@@ -11,15 +16,11 @@ class ProjectsController < ApplicationController
 
     end
 
-    # def select_project
-    #     cookies[:current_project_id] = params[:project_id]
-    #     redirect_to : a
-    # end
 
     def select_project
         project_id = params[:project_id]
         cookies[:selectedProjectId] = project_id
-        redirect_to root_path
+        redirect_to tasks_path
       end
 
 
@@ -33,7 +34,7 @@ class ProjectsController < ApplicationController
         
         if @project.save
         flash[:notice]= "Project added Successfully"
-        redirect_to projects_path
+        redirect_to tasks_path
 
         else
          render 'new'
