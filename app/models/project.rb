@@ -1,5 +1,7 @@
 class Project < ApplicationRecord 
 
+    has_rich_text :description
+
     has_many :tasks, foreign_key: 'project_id', dependent: :destroy
 
     belongs_to :creator, class_name: 'User'

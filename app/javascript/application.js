@@ -6,4 +6,5 @@ import "jquery";
 import { Turbo } from "@hotwired/turbo-rails";
 import * as bootstrap from "bootstrap"
 //= require jquery
-//= require jquery_ujs
+//= require jquery_ujsimport "trix"
+import "@rails/actiontext"

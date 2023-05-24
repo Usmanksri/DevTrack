@@ -29,8 +29,8 @@
 
 
 
+<%if @comments.present? %>
     <div id="page-content">
-
     <h1 class="text-center mt-4">Listing all comments</h1>
     <div class="container">
     <div id="comment-form" style="display: none;">
@@ -42,7 +42,6 @@
     <button id="show-comment-form" class="btn btn-outline-info">Add Comment</button>
     </br>
 
-
 <% @comments.each do |comment| %>
   <div class="card">
     <div class="card-body">
@@ -52,12 +51,11 @@
       <% if user_signed_in? && comment.user == current_user %>
       <%= link_to "Edit", edit_task_comment_path(@task, comment), class: "btn btn-outline-info" %>
       <%= button_to "Delete", task_comment_path(@task, comment), method: :delete, class: "btn btn-outline-danger" %>
-
     <% end %>
-    
     </div>
   </div>
 <% end %>
+<%end%>
 
 
 </div>
