@@ -7,7 +7,6 @@
         <li class="nav-item">
           <%= link_to "Home", root_path,class: 'nav-link' %>
         </li>
-
             <li class="navbar-item-right">
             <%= link_to "Projects", projects_path,class: 'nav-link' %>
             </li>
@@ -25,13 +24,10 @@
             <li class="navbar-item-right">
             <%= link_to "Add Task", new_task_path,class: 'nav-link' %>
             </li>
-
-              
-
         
         <li class="navbar-item-right">
           <% if user_signed_in? %>
-          <%= form_tag select_project_path, method: :post, class: "nav-link btn-link", id: "project-form" do %>
+          <%= form_tag select_project_path, method: :post, class: "nav-link", id: "project-form" do %>
             <%= select_tag :project_id, options_from_collection_for_select(current_user.role == "manager" ? current_user.created_projects : current_user.projects, :id, :name, cookies[:selectedProjectId]), prompt: "Select one", class: "form-control", onchange: "submit()" %>
           <% end %>
           
@@ -60,53 +56,4 @@
     </div>
   </div>
 </nav>
-
-
-
-
-
-
-
-
-
-
-<script>
-#      # <li class="navbar-item-right">
-            # <%= select_tag :project_id, options_from_collection_for_select(Project.all, :id, :name, cookies[:selectedProjectId]), prompt: "Select one", class: "nav-link btn-link", id: "project-selector" %>
-            # </li>    
-
-# document.addEventListener("DOMContentLoaded", () => {
-#   const projectSelector = document.getElementById("project-selector");
-#   const selectedProjectId = getCookie("selectedProjectId");
-
-#   if (selectedProjectId) {
-#     projectSelector.value = selectedProjectId;
-#   }
-
-
-#   projectSelector.addEventListener("change", () => {
-#     debugger;
-
-#     const newSelectedProjectId = projectSelector.value;
-#     setCookie("selectedProjectId", newSelectedProjectId);
-#   });
-
-#   if (!selectedProjectId) {
-#     const defaultProjectId = projectSelector.options[0].value;
-#     setCookie("selectedProjectId", defaultProjectId);
-#   }
-# });
-
-# function getCookie(name) {
-#   const cookieValue = document.cookie.match(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
-#   return cookieValue ? cookieValue.pop() : "";
-# }
-
-
-# function setCookie(name, value) {
-#   const domain = window.location.hostname;
-#   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
-#   document.cookie = `${name}=${value}; path=/; domain=${domain};`;
-# }
- </script>
 

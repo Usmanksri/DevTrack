@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
 
     def index
         if (current_user.role=="manager")
+            
             @projects=current_user.created_projects
         else
             @projects=current_user.projects
@@ -65,7 +66,6 @@ class ProjectsController < ApplicationController
 
     
     def project_params
-        #params.require(:project).permit(:name, :description)
         params.require(:project).permit(:name, :description, member_ids: [])
 
     end

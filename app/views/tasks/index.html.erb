@@ -36,46 +36,15 @@
                 <label class="form-check-label btn btn-outline-success" for="status_<%= task.id %>">Done</label>
                 </div>
                 </div>
-
-
             <div class="card-footer text-muted">
                 <small>Created <%= time_ago_in_words(task.created_at) %> ago, 
                 edited <%= time_ago_in_words(task.updated_at) %> ago</small>
             </div>
-
-
     </div>
     </div>
 <% end %>
 </div>
 </div>
 
-
-<script>
-  $(document).ready(function() {
-    $('input[type="radio"][name^="status_"]').change(function() {
-      var taskID = $(this).data('taskId'); // Updated to use 'taskId'
-      var status = $(this).val();
-      var taskURL = '<%= task_path('TASK_ID') %>'.replace('TASK_ID', taskID);
-      console.log("task url is: ", taskURL);
-
-      $.ajax({
-        url: taskURL,
-        type: 'PATCH',
-        data: { task: { status: status } },
-        dataType: 'json',
-        success: function(response) {
-          console.log(response);
-          // Handle success response here if needed
-          // Update the task status display if necessary
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
-          // Handle error response here if needed
-        }
-      });
-    });
-  });
-</script>
 
 
