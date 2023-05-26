@@ -13,7 +13,7 @@
             </div>
 
                     <div class="card-body">
-                    <p class="card-text">Description: <%= truncate(project.description, length: 100) %></p>
+                    <%= project.description.present? ? display_rich_text(project.description) : "No description available" %>
                     <p class="card-text">Manger: <%= project.creator.name %></p>
                     <p class="card-text">Members: <%= project.project_members.count %></p>
                     <%= link_to "View", project_path(project), class: "btn btn-outline-success" %>
